@@ -1,0 +1,47 @@
+# --- LaTeX -----------------------------------------------------------------
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# latexmk writes here (see docs/latexmkrc). The finished PDF is the deliverable,
+# so it is versioned; git needs the two rules on separate lines.
+docs/build/*
+!docs/build/Main.pdf
+
+# --- C++ / CMake -----------------------------------------------------------
+# Anchored with a leading slash: a bare `build/` would also re-exclude docs/build
+# and kill the negation above.
+/build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+compile_commands.json
+Testing/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.pdb
+*.ilk
+*.gcda
+*.gcno
+*.profraw
+coverage/
+
+# --- Editors and OS --------------------------------------------------------
+.vscode/
+.idea/
+.cache/
+.DS_Store
+Thumbs.db
