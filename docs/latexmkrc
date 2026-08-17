@@ -1,0 +1,12 @@
+# pdfLaTeX, НЕ XeLaTeX (T2A + tempora).
+$pdf_mode = 1;
+$bibtex_use = 2;
+$out_dir = 'build';
+$clean_ext = 'bbl nav out snm synctex.gz run.xml';
+
+# bibtex се стартира ВЪТРЕ в build/, така че `references.bib` се търси първо по пътя
+# на дистрибуцията. На тази машина MiKTeX доставя файл със същото име
+# (feupphdteses/references.bib) и той засенчва нашия: bibtex не намира нито един запис
+# и списъкът с литература излиза празен, при това БЕЗ грешка, само с предупреждения.
+# Затова папката на източника се слага първа в BIBINPUTS.
+$ENV{'BIBINPUTS'} = '..' . $search_path_separator . ($ENV{'BIBINPUTS'} // '');
