@@ -1,0 +1,41 @@
+# The knowledge model: types, relations and prepositional frames.
+#
+# TYPE  <name>  table=<t> key=<c> label=<c> iri=<n>     an entity type
+# TYPE  <name>  scalar=int                              a value type, no table
+# REL   <name>  args=<T>,<T> store=link table=<t> cols=<c>,<c> iri=<n>
+# REL   <name>  args=<T>,<T> store=attr table=<t> cols=<key>,<value> iri=<n>
+#       store=link is a table of pairs, store=attr is a column of the first
+#       argument's own table. The distinction only matters to the SQL generator.
+# FRAME <prep> arg=<T> attach=<T> rel=<R> order=attach,arg
+#       The preposition <prep>, with a noun phrase of type arg, attaching to a
+#       referent of type attach, means relation R. The frames are what turns a
+#       preposition into a relation, and the reason a reading can be rejected
+#       for having no meaning rather than for having no parse.
+
+TYPE Film    table=film    key=id label=title iri=Film
+TYPE Person  table=person  key=id label=name  iri=Person
+TYPE Country table=country key=id label=name  iri=Country
+TYPE Studio  table=studio  key=id label=name  iri=Studio
+TYPE Year    scalar=int
+
+REL directed       args=Person,Film    store=link table=directed cols=person_id,film_id iri=directed
+REL acted_in       args=Person,Film    store=link table=acted_in cols=person_id,film_id iri=actedIn
+REL produced       args=Studio,Film    store=link table=produced cols=studio_id,film_id iri=produced
+REL released       args=Film,Year      store=attr table=film     cols=id,year           iri=releasedIn
+REL person_country args=Person,Country store=attr table=person   cols=id,country_id     iri=comesFrom
+REL film_country   args=Film,Country   store=attr table=film     cols=id,country_id     iri=madeIn
+
+# "in 2010" restricts a film, "in Inception" restricts a person, and the two are
+# told apart by the type of the noun phrase, not by a rule about the word "in".
+FRAME in   arg=Year    attach=Film   rel=released       order=attach,arg
+FRAME in   arg=Film    attach=Person rel=acted_in       order=attach,arg
+FRAME from arg=Country attach=Person rel=person_country order=attach,arg
+FRAME in   arg=Country attach=Person rel=person_country order=attach,arg
+FRAME by   arg=Person  attach=Film   rel=directed       order=arg,attach
+FRAME by   arg=Studio  attach=Film   rel=produced       order=arg,attach
+FRAME with arg=Person  attach=Film   rel=acted_in       order=arg,attach
+FRAME from arg=Country attach=Film   rel=film_country   order=attach,arg
+
+# The order of the frames matters in one place only: the synthesiser says a
+# relation with the first frame that fits, so "from" is listed before "in" for
+# the country of a person.
