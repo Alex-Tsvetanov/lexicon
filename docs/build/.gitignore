@@ -1,0 +1,5 @@
+# Everything latexmk leaves behind is disposable, except the PDF, which is
+# tracked on purpose so the report can be read without a TeX installation.
+*
+!.gitignore
+!Main.pdf

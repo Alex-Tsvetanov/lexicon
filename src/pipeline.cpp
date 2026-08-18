@@ -76,7 +76,9 @@ Analysis System::analyse(const std::string& question) const {
     int best = -1;
     for (std::size_t i = 0; i < analysis.readings.size(); ++i) {
         const ReadingRecord& record = analysis.readings[i];
-        if (!record.ok || record.duplicate_of_earlier) continue;
+        // Readings that repeat a meaning already seen are still eligible: they
+        // say the same thing, so the one with the closest attachment is taken.
+        if (!record.ok) continue;
         if (best < 0 || record.attachment_cost < analysis.readings[static_cast<std::size_t>(best)]
                                                      .attachment_cost)
             best = static_cast<int>(i);
