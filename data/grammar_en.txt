@@ -7,10 +7,13 @@
 # The grammar has no empty production and no unit cycle, so the forest is acyclic
 # and the number of derivations is finite and countable by dynamic programming.
 #
-# Attachment ambiguity is deliberate and lives in exactly two productions,
-# NOM -> NOM PP and VP -> VP PP. Nothing else in the grammar produces two trees
-# for the same string, so the ambiguity that the demo reports is attachment
-# ambiguity and not an artefact of a redundant production.
+# Attachment ambiguity is deliberate and lives in exactly three productions,
+# NOM -> NOM PP, VP -> VP PP and VPPASS -> VPPASS PP. Each is left recursive and
+# gives one tree on its own; the second tree appears when one prepositional
+# phrase can close the noun phrase or attach to the verb phrase instead.
+# Nothing else in the grammar produces two trees for the same string, so the
+# ambiguity that the demo reports is attachment ambiguity and not an artefact of
+# a redundant production.
 
 %start S
 
