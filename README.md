@@ -57,7 +57,7 @@ both, so both readings survive, and the system says which one it took and why.
 None. A C++20 compiler and CMake 3.20 are enough. There is no package manager step, no network
 fetch at configure time, and no optional feature that quietly disappears.
 
-The test runner is 90 lines in `tests/check.cpp`, the timing harness uses
+The test runner is 58 lines in `tests/check.cpp` plus a 64 line header, the timing harness uses
 `std::chrono::steady_clock`, and the knowledge base is a text file read at startup. Python is
 needed only by `tools/check_sql.py`, which is a check on the generated SQL, not part of the
 build.
