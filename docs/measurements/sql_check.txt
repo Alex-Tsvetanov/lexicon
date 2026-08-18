@@ -1,0 +1,29 @@
+# Produced by: python tools/check_sql.py build/lexicon.exe
+
+OK    Who directed Inception?  -> Christopher Nolan
+OK    What did Nolan direct?  -> Dunkirk, Inception, Interstellar
+OK    Which films did Nolan direct?  -> Dunkirk, Inception, Interstellar
+OK    Which films did Nolan direct in 2010?  -> Inception
+OK    Which films were directed by Nolan?  -> Dunkirk, Inception, Interstellar
+OK    Which films were not directed by Nolan?  -> Amelie, Arrival
+OK    Which films did Nolan not direct?  -> Amelie, Arrival
+OK    How many films did Nolan direct?  -> 3
+OK    Did Nolan direct Inception?  -> yes
+OK    Did Villeneuve direct Inception?  -> no
+OK    Which actors acted in Inception?  -> Cillian Murphy, Leonardo DiCaprio, Marion Cotillard, Tom Hardy
+OK    How many actors acted in Dunkirk?  -> 2
+OK    Which actors acted in every film by Villeneuve?  -> Amy Adams
+OK    Which actors acted in no film by Nolan?  -> Amy Adams, Audrey Tautou, Christopher Nolan, Denis Villeneuve, Jean-Pierre Jeunet
+OK    Which films with actors from France did Nolan direct?  -> Inception
+OK    Which films with Cotillard were directed by Nolan?  -> Inception
+OK    Which actors from France acted in films by Nolan?  -> Marion Cotillard
+OK    Who directed a film with Cotillard in 2010?  -> Christopher Nolan
+OK    Which studios produced Dunkirk?  -> Warner Bros
+OK    Which films did Warner produce?  -> Dunkirk, Inception
+OK    Which films were produced by Warner in 2010?  -> Inception
+OK    Which directors from Canada directed films in 2016?  -> Denis Villeneuve
+SKIP  Which films did Nolan direct or produce?  (no parse: the grammar does not describe this sentence)
+SKIP  Which films that Nolan directed were released in 2010?  (no parse: the grammar does not describe this sentence)
+SKIP  Which films did Kubrick direct?  (no reading of this sentence maps onto the knowledge model)
+
+22/22 generated queries agree with the evaluator, 3 question(s) produced no query
