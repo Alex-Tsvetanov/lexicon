@@ -1,0 +1,63 @@
+# Grammar of the question forms of the film domain.
+#
+# A terminal is a part of speech plus an optional feature constraint, so no word
+# is ever mentioned here. Every production names the semantic rule that composes
+# its meaning, which is what keeps the two layers in step.
+#
+# The grammar has no empty production and no unit cycle, so the forest is acyclic
+# and the number of derivations is finite and countable by dynamic programming.
+#
+# Attachment ambiguity is deliberate and lives in exactly two productions,
+# NOM -> NOM PP and VP -> VP PP. Nothing else in the grammar produces two trees
+# for the same string, so the ambiguity that the demo reports is attachment
+# ambiguity and not an artefact of a redundant production.
+
+%start S
+
+%terminal WH      wh
+%terminal HOWW    howw
+%terminal MANY    manyw
+%terminal N       noun
+%terminal PN      propn
+%terminal V       verb   vform=base|past
+%terminal VPART   verb   vform=part
+%terminal AUXDO   auxdo
+%terminal AUXBE   auxbe
+%terminal DET     det
+%terminal P       prep
+%terminal NEG     neg
+%terminal NUM     num
+
+S       -> WHQ                      @pass
+S       -> YNQ                      @pass
+
+WHQ     -> WHNP AUXDO NP VP         @wh_do
+WHQ     -> WHNP AUXDO NP NEG VP     @wh_do_neg
+WHQ     -> WHNP VP                  @wh_subj
+WHQ     -> WHNP AUXBE VPPASS        @wh_pass
+WHQ     -> WHNP AUXBE NEG VPPASS    @wh_pass_neg
+WHQ     -> HOWMANY AUXDO NP VP      @howmany_do
+WHQ     -> HOWMANY VP               @howmany_subj
+
+YNQ     -> AUXDO NP VP              @yn_do
+
+HOWMANY -> HOWW MANY NOM            @howmany_np
+WHNP    -> WH                       @wh_bare
+WHNP    -> WH NOM                   @wh_nom
+
+NOM     -> N                        @nom_n
+NOM     -> NOM PP                   @nom_pp
+
+NP      -> PN                       @np_pn
+NP      -> NUM                      @np_num
+NP      -> NOM                      @np_bare
+NP      -> DET NOM                  @np_det
+
+VP      -> V                        @vp_v
+VP      -> V NP                     @vp_v_np
+VP      -> VP PP                    @vp_pp
+
+VPPASS  -> VPART                    @vpass_v
+VPPASS  -> VPPASS PP                @vpass_pp
+
+PP      -> P NP                     @pp
