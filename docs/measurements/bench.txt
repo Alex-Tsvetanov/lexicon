@@ -1,0 +1,51 @@
+# Raw benchmark output. Produced by:
+#   cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+#   cmake --build build
+#   ./build/lexicon_bench
+# Machine: Windows 11, 12 logical CPUs, g++ 15.2.0 (MinGW-w64), CMake 4.3.2, Ninja 1.13.2.
+# Date: 2026-08-19
+
+Lexicon benchmark. Every number below was produced by this run.
+
+== Size of the compiled resources ==
+lexemes                 56
+surface forms           80
+transducer states       257
+transducer transitions  256
+grammar productions     25
+grammar symbols         23
+relations in the model  6
+prepositional frames    8
+entities                22
+facts                   38
+
+== Parse time against sentence length ==
+phrases  words  derivations  chart items  forest nodes  median us  best us
+      0      4            1           48            13       13.4     12.6
+      1      6            2           66            22       21.6     19.9
+      2      8            3           84            31       27.4     19.3
+      3     10            4          102            40       32.4     23.4
+      4     12            5          120            49       39.0     28.3
+      5     14            6          138            58       54.5     45.4
+      6     16            7          156            67       41.0     38.5
+
+== Ambiguity against grammar size ==
+Three grammars over the same question set. The second and the third add
+productions that describe nothing the first cannot already describe.
+
+grammar        rules  parsed  derivations  distinct forms  ambiguity points
+grammar_en.txt   25      23           30              25                 7
+grammar_v2.txt   27      23           47              25                19
+grammar_v3.txt   28      23           47              25                19
+
+== Coverage over the bundled question set ==
+questions               25
+parsed                  23
+answered                22
+more than one parse     6
+mean parse time         30.9 us
+
+failures, in full:
+  Which films did Nolan direct or produce?  ->  no parse: the grammar does not describe this sentence
+  Which films that Nolan directed were released in 2010?  ->  no parse: the grammar does not describe this sentence
+  Which films did Kubrick direct?  ->  no reading of this sentence maps onto the knowledge model
