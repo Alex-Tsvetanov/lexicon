@@ -1,0 +1,50 @@
+# Per question figures. Produced by: ./build/lexicon --all
+# question | derivations | mapped onto the model | distinct logical forms
+
+Who directed Inception?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+What did Nolan direct?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which films did Nolan direct?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which films did Nolan direct in 2010?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 1
+Which films were directed by Nolan?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which films were not directed by Nolan?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which films did Nolan not direct?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+How many films did Nolan direct?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Did Nolan direct Inception?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Did Villeneuve direct Inception?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which actors acted in Inception?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+How many actors acted in Dunkirk?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which actors acted in every film by Villeneuve?
+2 derivation(s), 2 mapped onto the model, 2 distinct logical form(s); chose reading 2 with attachment cost 1, the closest attachment among the surviving readings
+Which actors acted in no film by Nolan?
+2 derivation(s), 2 mapped onto the model, 2 distinct logical form(s); chose reading 2 with attachment cost 1, the closest attachment among the surviving readings
+Which films with actors from France did Nolan direct?
+2 derivation(s), 2 mapped onto the model, 2 distinct logical form(s); chose reading 2 with attachment cost 2, the closest attachment among the surviving readings
+Which films with Cotillard were directed by Nolan?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 1
+Which actors from France acted in films by Nolan?
+2 derivation(s), 2 mapped onto the model, 1 distinct logical form(s); chose reading 2 with attachment cost 2; the other readings differ only in the tree, not in the meaning
+Who directed a film with Cotillard in 2010?
+3 derivation(s), 3 mapped onto the model, 1 distinct logical form(s); chose reading 3 with attachment cost 4; the other readings differ only in the tree, not in the meaning
+Which studios produced Dunkirk?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which films did Warner produce?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 0
+Which films were produced by Warner in 2010?
+1 derivation(s), 1 mapped onto the model, 1 distinct logical form(s); chose reading 1 with attachment cost 3
+Which directors from Canada directed films in 2016?
+2 derivation(s), 2 mapped onto the model, 1 distinct logical form(s); chose reading 2 with attachment cost 2; the other readings differ only in the tree, not in the meaning
+Which films did Nolan direct or produce?
+Which films that Nolan directed were released in 2010?
+Which films did Kubrick direct?

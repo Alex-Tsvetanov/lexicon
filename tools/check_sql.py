@@ -11,9 +11,24 @@ checks that they do.
 The only dependency is the sqlite3 module of the standard library.
 """
 
+import os
 import subprocess
 import sqlite3
 import sys
+
+
+def resolve(binary):
+    """Absolute path of the demo binary, with the Windows suffix if needed.
+
+    CreateProcess does not look a relative path up the way a shell does, so
+    "build/lexicon" has to be turned into a full path before it is run.
+    """
+    path = os.path.abspath(binary)
+    if not os.path.exists(path) and os.path.exists(path + ".exe"):
+        path += ".exe"
+    if not os.path.exists(path):
+        raise SystemExit(f"no such binary: {binary}. Build it first with cmake --build build")
+    return path
 
 
 def run(binary, *args):
@@ -59,7 +74,7 @@ def answer_of(cursor, sql):
 
 
 def main():
-    binary = sys.argv[1] if len(sys.argv) > 1 else "build/lexicon.exe"
+    binary = resolve(sys.argv[1] if len(sys.argv) > 1 else "build/lexicon")
     connection = sqlite3.connect(":memory:")
     connection.executescript(run(binary, "--emit-sql-schema"))
     cursor = connection.cursor()

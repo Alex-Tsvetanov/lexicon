@@ -1,4 +1,4 @@
-# Produced by: python tools/check_sql.py build/lexicon.exe
+# Produced by: python tools/check_sql.py build/lexicon
 
 OK    Who directed Inception?  -> Christopher Nolan
 OK    What did Nolan direct?  -> Dunkirk, Inception, Interstellar

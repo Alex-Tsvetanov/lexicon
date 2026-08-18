@@ -21,13 +21,13 @@ facts                   38
 
 == Parse time against sentence length ==
 phrases  words  derivations  chart items  forest nodes  median us  best us
-      0      4            1           48            13       13.4     12.6
-      1      6            2           66            22       21.6     19.9
-      2      8            3           84            31       27.4     19.3
-      3     10            4          102            40       32.4     23.4
-      4     12            5          120            49       39.0     28.3
-      5     14            6          138            58       54.5     45.4
-      6     16            7          156            67       41.0     38.5
+      0      4            1           48            13       14.6     14.1
+      1      6            2           66            22       22.7     21.9
+      2      8            3           84            31       30.0     26.5
+      3     10            4          102            40       35.3     33.6
+      4     12            5          120            49       45.4     42.3
+      5     14            6          138            58       52.8     49.6
+      6     16            7          156            67       64.7     55.9
 
 == Ambiguity against grammar size ==
 Three grammars over the same question set. The second and the third add
@@ -43,7 +43,7 @@ questions               25
 parsed                  23
 answered                22
 more than one parse     6
-mean parse time         30.9 us
+mean parse time         45.1 us
 
 failures, in full:
   Which films did Nolan direct or produce?  ->  no parse: the grammar does not describe this sentence

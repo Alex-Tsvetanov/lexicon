@@ -1,6 +1,8 @@
 % Приложения. По А.3: изходен текст на програми, формати на структури от данни,
 % екранни форми, получени резултати и др.
 % Приложенията НЕ влизат в препоръчителния обем на изложението.
+% Всички листинги се четат от истинските файлове с \lstinputlisting, тоест не
+% могат да се разминат с хранилището.
 \phantomsection
 \addcontentsline{toc}{section}{ПРИЛОЖЕНИЯ}
 \section*{ПРИЛОЖЕНИЯ}
@@ -9,25 +11,87 @@
 \subsection*{Приложение А. Формат на лексикалния запис}
 \addcontentsline{toc}{subsection}{Приложение А. Формат на лексикалния запис}
 
-\TODO{описание на полетата в един лексикален запис и пример за няколко записа,
-прочетени от действителния файл в data/}
+Лексиконът се състои от парадигми и лексеми. Парадигмата е списък от форми, всяка от
+които се задава с афикс и с признаците, които той внася. Афиксът \code{+} означава голата
+основа, \code{+s} добавяне на суфикс, а \code{\textasciitilde 1+ies} изтриване на един
+знак и добавяне на суфикс. Лексемата сочи основа, лексема, част на речта, парадигма и
+семантично поле. Първите редове на английския лексикон, заедно с целия български, са
+дадени в Листинг~\ref{lst:lexen} и Листинг~\ref{lst:lexbg}.
+
+\lstinputlisting[language={},caption={Парадигми и част от лексемите, \code{data/lexicon\_en.txt}},
+label={lst:lexen}, firstline=19, lastline=72]{../data/lexicon_en.txt}
+
+\lstinputlisting[language={},caption={Целият български лексикон, \code{data/lexicon\_bg.txt}},
+label={lst:lexbg}]{../data/lexicon_bg.txt}
 
 \subsection*{Приложение Б. Граматика на предметната област}
 \addcontentsline{toc}{subsection}{Приложение Б. Граматика на предметната област}
 
-\TODO{пълният набор от продукции, прочетен от файла с граматиката}
+\lstinputlisting[language={},caption={Пълният набор от продукции, \code{data/grammar\_en.txt}},
+label={lst:grammar}, firstline=15]{../data/grammar_en.txt}
 
-\subsection*{Приложение В. Набор от въпроси за експеримента}
-\addcontentsline{toc}{subsection}{Приложение В. Набор от въпроси за експеримента}
+\subsection*{Приложение В. Модел на знанието}
+\addcontentsline{toc}{subsection}{Приложение В. Модел на знанието}
 
-\TODO{замразеният набор от въпроси заедно с еталонните заявки за всеки от тях}
+Схемата описва типовете, релациите и предложните рамки. Рамката е това, което превръща
+предлог в релация, и причината едно разчитане да бъде отхвърлено заради липса на значение,
+а не заради липса на извод.
 
-\subsection*{Приложение Г. Избрани откъси от изходния текст}
-\addcontentsline{toc}{subsection}{Приложение Г. Избрани откъси от изходния текст}
+\lstinputlisting[language={},caption={Типове, релации и предложни рамки, \code{data/schema.txt}},
+label={lst:schema}, firstline=15]{../data/schema.txt}
+
+Базата от знания е малка ръчно написана извадка от каталог на филми, достатъчно голяма,
+за да дадат различните разчитания на един въпрос различни отговори, и достатъчно малка,
+за да бъде проверена на око.
+
+\lstinputlisting[language={},caption={Вградената база от знания, \code{data/kb.txt}},
+label={lst:kb}, firstline=7]{../data/kb.txt}
+
+\subsection*{Приложение Г. Набор от въпроси и проверка на генерирания SQL}
+\addcontentsline{toc}{subsection}{Приложение Г. Набор от въпроси и проверка на SQL}
+
+Наборът е замразен преди измерването. Последните три въпроса са нарочно извън обхвата.
+
+\lstinputlisting[language={},caption={Замразеният набор от въпроси, \code{data/questions.txt}},
+label={lst:questions}, firstline=6]{../data/questions.txt}
+
+Вместо еталонни заявки, съставени на ръка, съответствието се проверява чрез изпълнение:
+генерираният SQL се пуска върху SQLite и резултатът се сравнява с този на оценителя, който
+работи направо върху логическата форма. Записаният изход е в Листинг~\ref{lst:sqlcheck}.
+
+\lstinputlisting[language={},caption={Записан резултат от кръстосаната проверка, \code{docs/measurements/sql\_check.txt}},
+label={lst:sqlcheck}]{measurements/sql_check.txt}
+
+\subsection*{Приложение Д. Записани измервания}
+\addcontentsline{toc}{subsection}{Приложение Д. Записани измервания}
+
+\lstinputlisting[language={},caption={Необработен изход на измерващата програма, \code{docs/measurements/bench.txt}},
+label={lst:bench}]{measurements/bench.txt}
+
+\subsection*{Приложение Е. Избрани откъси от изходния текст}
+\addcontentsline{toc}{subsection}{Приложение Е. Избрани откъси от изходния текст}
 
 Показват се само относимите откъси, а не целите файлове. Всеки откъс се чете от
 истинския файл при компилация с \code{\textbackslash lstinputlisting}, тоест не може
 да се разминава с хранилището.
 
-\TODO{откъсите от src/ и include/, добавени с \textbackslash lstinputlisting след
-реализацията}
+\lstinputlisting[caption={Договорът на морфологичния слой, \code{include/lexicon/morph.hpp}},
+label={lst:morphhpp}, firstline=47, lastline=72]{../include/lexicon/morph.hpp}
+
+\lstinputlisting[caption={Анализ, отгатване и генериране върху един и същ преобразувател, \code{src/morph.cpp}},
+label={lst:morphrun}, firstline=179, lastline=233]{../src/morph.cpp}
+
+\lstinputlisting[caption={Представяне на елемента, на връзката и на гората, \code{include/lexicon/earley.hpp}},
+label={lst:forest}, firstline=31, lastline=61]{../include/lexicon/earley.hpp}
+
+\lstinputlisting[caption={Броене на изводите върху гората, без изброяване, \code{src/earley.cpp}},
+label={lst:count}, firstline=175, lastline=219]{../src/earley.cpp}
+
+\lstinputlisting[caption={Логическата форма, \code{include/lexicon/logic.hpp}},
+label={lst:logic}, firstline=16, lastline=73]{../include/lexicon/logic.hpp}
+
+\lstinputlisting[caption={Сглобяване на изречението и повдигане на кванторите, \code{src/semantics.cpp}},
+label={lst:assemble}, firstline=270, lastline=300]{../src/semantics.cpp}
+
+\lstinputlisting[caption={Генератор на SPARQL, \code{src/codegen.cpp}},
+label={lst:sparql}, firstline=287, lastline=360]{../src/codegen.cpp}
