@@ -1,0 +1,30 @@
+# The frozen question set. It was written before the measurement and is not
+# edited to make a result look better. The last three questions are known to be
+# outside the grammar and the lexicon, and they are here so that the coverage
+# figure has something to fail on.
+
+Who directed Inception?
+What did Nolan direct?
+Which films did Nolan direct?
+Which films did Nolan direct in 2010?
+Which films were directed by Nolan?
+Which films were not directed by Nolan?
+Which films did Nolan not direct?
+How many films did Nolan direct?
+Did Nolan direct Inception?
+Did Villeneuve direct Inception?
+Which actors acted in Inception?
+How many actors acted in Dunkirk?
+Which actors acted in every film by Villeneuve?
+Which actors acted in no film by Nolan?
+Which films with actors from France did Nolan direct?
+Which films with Cotillard were directed by Nolan?
+Which actors from France acted in films by Nolan?
+Who directed a film with Cotillard in 2010?
+Which studios produced Dunkirk?
+Which films did Warner produce?
+Which films were produced by Warner in 2010?
+Which directors from Canada directed films in 2016?
+Which films did Nolan direct or produce?
+Which films that Nolan directed were released in 2010?
+Which films did Kubrick direct?
