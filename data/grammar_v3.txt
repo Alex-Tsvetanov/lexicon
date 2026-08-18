@@ -1,0 +1,55 @@
+# Grammar variant 3: variant 2 plus noun noun compounding, NOM -> NOM NOM, again
+# without widening coverage over the bundled question set.
+%start S
+
+%terminal WH      wh
+%terminal HOWW    howw
+%terminal MANY    manyw
+%terminal N       noun
+%terminal PN      propn
+%terminal V       verb   vform=base|past
+%terminal VPART   verb   vform=part
+%terminal AUXDO   auxdo
+%terminal AUXBE   auxbe
+%terminal DET     det
+%terminal P       prep
+%terminal NEG     neg
+%terminal NUM     num
+
+S       -> WHQ                      @pass
+S       -> YNQ                      @pass
+
+WHQ     -> WHNP AUXDO NP VP         @wh_do
+WHQ     -> WHNP AUXDO NP NEG VP     @wh_do_neg
+WHQ     -> WHNP VP                  @wh_subj
+WHQ     -> WHNP AUXBE VPPASS        @wh_pass
+WHQ     -> WHNP AUXBE NEG VPPASS    @wh_pass_neg
+WHQ     -> HOWMANY AUXDO NP VP      @howmany_do
+WHQ     -> HOWMANY VP               @howmany_subj
+
+YNQ     -> AUXDO NP VP              @yn_do
+
+HOWMANY -> HOWW MANY NOM            @howmany_np
+WHNP    -> WH                       @wh_bare
+WHNP    -> WH NOM                   @wh_nom
+
+NOM     -> N                        @nom_n
+NOM     -> NOM PP                   @nom_pp
+
+NP      -> PN                       @np_pn
+NP      -> NUM                      @np_num
+NP      -> NOM                      @np_bare
+NP      -> DET NOM                  @np_det
+
+VP      -> V                        @vp_v
+VP      -> V NP                     @vp_v_np
+VP      -> VP PP                    @vp_pp
+
+VPPASS  -> VPART                    @vpass_v
+VPPASS  -> VPPASS PP                @vpass_pp
+
+PP      -> P NP                     @pp
+
+NP      -> NP PP                    @np_pp
+VP      -> V NP PP                  @vp_v_np_pp
+NOM     -> NOM NOM                  @nom_compound
