@@ -1,0 +1,30 @@
+# Малък български лексикон. Обхватът е нарочно тесен: три парадигми и няколко
+# лексеми, върху които словоизменението е редовно. Целта е да се покаже, че
+# преобразувателят не зависи от езика, а само от данните: членуването и числото
+# се получават от същия механизъм, който обслужва английския лексикон.
+#
+# Изтриването в афикса се брои в знаци, а не в байтове, затова ~1 маха една
+# кирилска буква, а не половин.
+
+PARADIGM BG_NOUN_M
+FORM +          num=sg
+FORM +ът        num=sg def=yes
+FORM +и         num=pl
+FORM +ите       num=pl def=yes
+
+PARADIGM BG_NOUN_F
+FORM +          num=sg
+FORM +та        num=sg def=yes
+FORM ~1+и       num=pl
+FORM ~1+ите     num=pl def=yes
+
+PARADIGM BG_INVAR
+FORM +          -
+
+LEX филм        филм        noun    BG_NOUN_M   type=Film
+LEX актьор      актьор      noun    BG_NOUN_M   type=Person
+LEX режисьор    режисьор    noun    BG_NOUN_M   type=Person
+LEX държава     държава     noun    BG_NOUN_F   type=Country
+LEX година      година      noun    BG_NOUN_F   type=Year
+LEX в           в           prep    BG_INVAR    prep=in
+LEX от          от          prep    BG_INVAR    prep=from

@@ -1,0 +1,119 @@
+# English lexicon of the film domain.
+#
+# PARADIGM <name>            opens a paradigm
+# FORM <affix> [feat=value]  one form of that paradigm
+#     affix syntax:  +          the bare stem
+#                    +s         append "s"
+#                    ~1+ies     drop one character, then append "ies"
+# LEX <stem> <lemma> <pos> <paradigm> [sem field]
+#     sem fields:  type=<T>    the noun denotes entities of type T
+#                  rel=<R>     the verb denotes relation R
+#                  objprep=<p> the object of the verb arrives through preposition p
+#                  ent=<id>    the proper noun denotes this entity
+#                  prep=<p>    preposition, resolved through the frames in schema.txt
+#                  det=<q>     determiner and the quantifier it introduces
+#                  wh=<k>      question word
+#
+# The paradigms and the lexicon are composed into one transducer at load time.
+
+PARADIGM NOUN_S
+FORM +          num=sg
+FORM +s         num=pl
+
+PARADIGM NOUN_ES
+FORM +          num=sg
+FORM +es        num=pl
+
+PARADIGM NOUN_Y
+FORM +          num=sg
+FORM ~1+ies     num=pl
+
+PARADIGM VERB_REG
+FORM +          vform=base
+FORM +s         vform=fin tense=pres num=sg pers=3
+FORM +ed        vform=past tense=past
+FORM +ed        vform=part
+FORM +ing       vform=ger
+
+PARADIGM VERB_E
+FORM +          vform=base
+FORM +s         vform=fin tense=pres num=sg pers=3
+FORM ~1+ed      vform=past tense=past
+FORM ~1+ed      vform=part
+FORM ~1+ing     vform=ger
+
+# "person" has an irregular plural, which the affix syntax expresses by deleting
+# the whole stem: the alternation is data, not a special case in the code.
+PARADIGM NOUN_PEOPLE
+FORM +          num=sg
+FORM ~6+people  num=pl
+
+PARADIGM INVAR
+FORM +          -
+
+# --- common nouns ----------------------------------------------------------
+LEX person      person      noun    NOUN_PEOPLE type=Person
+LEX film        film        noun    NOUN_S      type=Film
+LEX movie       movie       noun    NOUN_S      type=Film
+LEX actor       actor       noun    NOUN_S      type=Person
+LEX actress     actress     noun    NOUN_ES     type=Person
+LEX director    director    noun    NOUN_S      type=Person
+LEX studio      studio      noun    NOUN_S      type=Studio
+LEX country     country     noun    NOUN_Y      type=Country
+
+# The first verb of a relation is the one the synthesiser uses to say it, so
+# "direct" is listed before the verb "film".
+LEX direct      direct      verb    VERB_REG    rel=directed
+# "films" is also a verb form. The homonymy is real and the morphological layer
+# keeps both readings; the parser is what decides between them.
+LEX film        film        verb    VERB_REG    rel=directed
+LEX produce     produce     verb    VERB_E      rel=produced
+LEX act         act         verb    VERB_REG    rel=acted_in objprep=in
+
+# --- proper nouns ----------------------------------------------------------
+LEX Nolan       Nolan       propn   INVAR       ent=p_nolan
+LEX Villeneuve  Villeneuve  propn   INVAR       ent=p_villeneuve
+LEX Jeunet      Jeunet      propn   INVAR       ent=p_jeunet
+LEX DiCaprio    DiCaprio    propn   INVAR       ent=p_dicaprio
+LEX Cotillard   Cotillard   propn   INVAR       ent=p_cotillard
+LEX Hardy       Hardy       propn   INVAR       ent=p_hardy
+LEX Murphy      Murphy      propn   INVAR       ent=p_murphy
+LEX McConaughey McConaughey propn   INVAR       ent=p_mcconaughey
+LEX Hathaway    Hathaway    propn   INVAR       ent=p_hathaway
+LEX Adams       Adams       propn   INVAR       ent=p_adams
+LEX Tautou      Tautou      propn   INVAR       ent=p_tautou
+LEX Inception   Inception   propn   INVAR       ent=f_inception
+LEX Interstellar Interstellar propn INVAR       ent=f_interstellar
+LEX Dunkirk     Dunkirk     propn   INVAR       ent=f_dunkirk
+LEX Arrival     Arrival     propn   INVAR       ent=f_arrival
+LEX Amelie      Amelie      propn   INVAR       ent=f_amelie
+LEX France      France      propn   INVAR       ent=c_france
+LEX Ireland     Ireland     propn   INVAR       ent=c_ireland
+LEX Canada      Canada      propn   INVAR       ent=c_canada
+LEX Warner      Warner      propn   INVAR       ent=s_warner
+
+# --- function words --------------------------------------------------------
+LEX which       which       wh      INVAR       wh=which
+LEX what        what        wh      INVAR       wh=which
+LEX who         who         wh      INVAR       wh=who type=Person
+LEX how         how         howw    INVAR       wh=count
+LEX many        many        manyw   INVAR       -
+LEX the         the         det     INVAR       det=exists
+LEX a           a           det     INVAR       det=exists
+LEX an          an          det     INVAR       det=exists
+LEX any         any         det     INVAR       det=exists
+LEX every       every       det     INVAR       det=forall
+LEX all         all         det     INVAR       det=forall
+LEX no          no          det     INVAR       det=none
+LEX did         do          auxdo   INVAR       -
+LEX does        do          auxdo   INVAR       -
+LEX do          do          auxdo   INVAR       -
+LEX was         be          auxbe   INVAR       -
+LEX were        be          auxbe   INVAR       -
+LEX is          be          auxbe   INVAR       -
+LEX are         be          auxbe   INVAR       -
+LEX not         not         neg     INVAR       -
+LEX in          in          prep    INVAR       prep=in
+LEX by          by          prep    INVAR       prep=by
+LEX with        with        prep    INVAR       prep=with
+LEX from        from        prep    INVAR       prep=from
