@@ -1,0 +1,76 @@
+# Bundled knowledge base. It is a small hand written sample of a film catalogue,
+# large enough to make the generated queries return different answers for
+# different readings of a question, and small enough to be checked by eye.
+#
+# ENTITY <type> <id> "<label>"
+# FACT   <relation> <argument> <argument>
+
+ENTITY Film    f_inception     "Inception"
+ENTITY Film    f_interstellar  "Interstellar"
+ENTITY Film    f_dunkirk       "Dunkirk"
+ENTITY Film    f_arrival       "Arrival"
+ENTITY Film    f_amelie        "Amelie"
+
+ENTITY Person  p_nolan         "Christopher Nolan"
+ENTITY Person  p_villeneuve    "Denis Villeneuve"
+ENTITY Person  p_jeunet        "Jean-Pierre Jeunet"
+ENTITY Person  p_dicaprio      "Leonardo DiCaprio"
+ENTITY Person  p_cotillard     "Marion Cotillard"
+ENTITY Person  p_hardy         "Tom Hardy"
+ENTITY Person  p_murphy        "Cillian Murphy"
+ENTITY Person  p_mcconaughey   "Matthew McConaughey"
+ENTITY Person  p_hathaway      "Anne Hathaway"
+ENTITY Person  p_adams         "Amy Adams"
+ENTITY Person  p_tautou        "Audrey Tautou"
+
+ENTITY Country c_uk            "United Kingdom"
+ENTITY Country c_usa           "United States"
+ENTITY Country c_france        "France"
+ENTITY Country c_canada        "Canada"
+ENTITY Country c_ireland       "Ireland"
+
+ENTITY Studio  s_warner        "Warner Bros"
+
+FACT directed p_nolan      f_inception
+FACT directed p_nolan      f_interstellar
+FACT directed p_nolan      f_dunkirk
+FACT directed p_villeneuve f_arrival
+FACT directed p_jeunet     f_amelie
+
+FACT acted_in p_dicaprio     f_inception
+FACT acted_in p_cotillard    f_inception
+FACT acted_in p_hardy        f_inception
+FACT acted_in p_murphy       f_inception
+FACT acted_in p_hardy        f_dunkirk
+FACT acted_in p_murphy       f_dunkirk
+FACT acted_in p_mcconaughey  f_interstellar
+FACT acted_in p_hathaway     f_interstellar
+FACT acted_in p_adams        f_arrival
+FACT acted_in p_tautou       f_amelie
+
+FACT released f_inception    2010
+FACT released f_interstellar 2014
+FACT released f_dunkirk      2017
+FACT released f_arrival      2016
+FACT released f_amelie       2001
+
+FACT person_country p_nolan       c_uk
+FACT person_country p_villeneuve  c_canada
+FACT person_country p_jeunet      c_france
+FACT person_country p_dicaprio    c_usa
+FACT person_country p_cotillard   c_france
+FACT person_country p_hardy       c_uk
+FACT person_country p_murphy      c_ireland
+FACT person_country p_mcconaughey c_usa
+FACT person_country p_hathaway    c_usa
+FACT person_country p_adams       c_usa
+FACT person_country p_tautou      c_france
+
+FACT film_country f_inception    c_usa
+FACT film_country f_interstellar c_usa
+FACT film_country f_dunkirk      c_uk
+FACT film_country f_arrival      c_usa
+FACT film_country f_amelie       c_france
+
+FACT produced s_warner f_inception
+FACT produced s_warner f_dunkirk
