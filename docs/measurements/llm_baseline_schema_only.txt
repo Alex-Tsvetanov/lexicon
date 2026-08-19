@@ -1,0 +1,140 @@
+Baseline comparison, local language model against the rule based pipeline
+
+model      : qwen2.5-coder:7b
+digest     : dae161e27b0e
+settings   : temperature 0, seed 1, num_predict 400
+runner     : ollama, ollama version is 0.32.9
+criterion  : execution equivalence against the bundled database.
+             Both queries run, the result sets are compared as unordered
+             multisets. Query text is not compared.
+questions  : 25
+condition  : schema only, no data shown
+
+agreements : 5 of 25
+model SQL that did not execute: 1
+
+ 1. Who directed Inception?
+    lexicon : rows=["('Christopher Nolan',)"]
+    model   : rows=ERROR no such column: T2.role
+    verdict : differs
+    model sql: SELECT T2.name FROM film AS T1 INNER JOIN person AS T2 ON T1.id = T2.person_id WHERE T1.title = 'Inception' AND T2.role = 'director'
+ 2. What did Nolan direct?
+    lexicon : rows=["('Dunkirk',)", "('Inception',)", "('Interstellar',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN directed AS T2 ON T1.id = T2.film_id WHERE T2.person_id = ( SELECT id FROM person WHERE name = 'Nolan' )
+ 3. Which films did Nolan direct?
+    lexicon : rows=["('Dunkirk',)", "('Inception',)", "('Interstellar',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN directed AS T2 ON T1.id = T2.film_id WHERE T2.person_id IN ( SELECT id FROM person WHERE name = 'Nolan' )
+ 4. Which films did Nolan direct in 2010?
+    lexicon : rows=["('Inception',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN directed AS T2 ON T1.id = T2.film_id JOIN person AS T3 ON T2.person_id = T3.id WHERE T3.name = 'Nolan' AND T1.year = 2010
+ 5. Which films were directed by Nolan?
+    lexicon : rows=["('Dunkirk',)", "('Inception',)", "('Interstellar',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN directed AS T2 ON T1.id = T2.film_id JOIN person AS T3 ON T2.person_id = T3.id WHERE T3.name = 'Nolan'
+ 6. Which films were not directed by Nolan?
+    lexicon : rows=["('Amelie',)", "('Arrival',)"]
+    model   : rows=["('Amelie',)", "('Arrival',)", "('Dunkirk',)", "('Inception',)", "('Interstellar',)"]
+    verdict : differs
+    model sql: SELECT title FROM film WHERE id NOT IN (SELECT T1.film_id FROM directed AS T1 JOIN person AS T2 ON T1.person_id = T2.id WHERE T2.name = 'Nolan')
+ 7. Which films did Nolan not direct?
+    lexicon : rows=["('Amelie',)", "('Arrival',)"]
+    model   : rows=["('Amelie',)", "('Arrival',)", "('Dunkirk',)", "('Inception',)", "('Interstellar',)"]
+    verdict : differs
+    model sql: SELECT title FROM film WHERE id NOT IN (SELECT film_id FROM directed WHERE person_id = (SELECT id FROM person WHERE name = 'Nolan'))
+ 8. How many films did Nolan direct?
+    lexicon : rows=['(3,)']
+    model   : rows=['(0,)']
+    verdict : differs
+    model sql: SELECT COUNT(*) FROM directed AS d JOIN person AS p ON d.person_id = p.id WHERE p.name = 'Nolan'
+ 9. Did Nolan direct Inception?
+    lexicon : rows=['(1,)']
+    model   : rows=["('Yes',)"]
+    verdict : differs
+    model sql: SELECT CASE WHEN EXISTS ( SELECT 1 FROM directed AS d JOIN person AS p ON d.person_id = p.id JOIN film AS f ON d.film_id = f.id WHERE p.name = 'Christopher Nolan' AND f.title = 'Inception' ) THEN 'Yes' ELSE 'No' END
+10. Did Villeneuve direct Inception?
+    lexicon : rows=['(0,)']
+    model   : rows=["('Yes',)"]
+    verdict : differs
+    model sql: SELECT CASE WHEN EXISTS (SELECT 1 FROM directed WHERE person_id = (SELECT id FROM person WHERE name = 'Christopher Nolan') AND film_id = (SELECT id FROM film WHERE title = 'Inception')) THEN 'Yes' ELSE 'No' END AS result
+11. Which actors acted in Inception?
+    lexicon : rows=["('Cillian Murphy',)", "('Leonardo DiCaprio',)", "('Marion Cotillard',)", "('Tom Hardy',)"]
+    model   : rows=["('Cillian Murphy',)", "('Leonardo DiCaprio',)", "('Marion Cotillard',)", "('Tom Hardy',)"]
+    verdict : same result set
+    model sql: SELECT T2.name FROM acted_in AS T1 JOIN person AS T2 ON T1.person_id = T2.id JOIN film AS T3 ON T1.film_id = T3.id WHERE T3.title = 'Inception'
+12. How many actors acted in Dunkirk?
+    lexicon : rows=['(2,)']
+    model   : rows=['(2,)']
+    verdict : same result set
+    model sql: SELECT COUNT(*) FROM acted_in WHERE film_id = (SELECT id FROM film WHERE title = 'Dunkirk')
+13. Which actors acted in every film by Villeneuve?
+    lexicon : rows=["('Amy Adams',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T2.name FROM directed AS T1 JOIN person AS T2 ON T1.person_id = T2.id WHERE T2.name = 'Villeneuve' GROUP BY T2.id HAVING COUNT(DISTINCT T1.film_id) = ( SELECT COUNT(*) FROM film )
+14. Which actors acted in no film by Nolan?
+    lexicon : rows=["('Amy Adams',)", "('Audrey Tautou',)", "('Christopher Nolan',)", "('Denis Villeneuve',)", "('Jean-Pierre Jeunet',)"]
+    model   : rows=["('Amy Adams',)", "('Anne Hathaway',)", "('Audrey Tautou',)", "('Christopher Nolan',)", "('Cillian Murphy',)", "('Denis Villeneuve',)", "('Jean-Pierre Jeunet',)", "('Leonardo DiCaprio',)", "('Marion Cotillard',)", "('Matthew McConaughey',)", "('Tom Hardy',)"]
+    verdict : differs
+    model sql: SELECT name FROM person WHERE id NOT IN (SELECT T1.person_id FROM acted_in AS T1 JOIN film AS T2 ON T1.film_id = T2.id JOIN directed AS T3 ON T2.id = T3.film_id WHERE T3.person_id = (SELECT id FROM person WHERE name = 'Nolan'))
+15. Which films with actors from France did Nolan direct?
+    lexicon : rows=["('Inception',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN acted_in AS T2 ON T1.id = T2.film_id JOIN person AS T3 ON T2.person_id = T3.id JOIN directed AS T4 ON T1.id = T4.film_id WHERE T3.country_id = 'France' AND T4.person_id = (SELECT id FROM person WHERE name = 'Nolan')
+16. Which films with Cotillard were directed by Nolan?
+    lexicon : rows=["('Inception',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T3.title FROM person AS T1 JOIN acted_in AS T2 ON T1.id = T2.person_id JOIN film AS T3 ON T2.film_id = T3.id WHERE T1.name = 'Cotillard' AND T3.id IN ( SELECT T4.film_id FROM directed AS T4 JOIN person AS T5 ON T4.person_id = T5.id WHERE T5.name = 'Nolan' )
+17. Which actors from France acted in films by Nolan?
+    lexicon : rows=["('Marion Cotillard',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T3.name FROM directed AS T1 JOIN film AS T2 ON T1.film_id = T2.id JOIN person AS T3 ON T1.person_id = T3.id WHERE T2.country_id IN ( SELECT id FROM country WHERE name = 'France' ) AND T3.name = 'Nolan'
+18. Who directed a film with Cotillard in 2010?
+    lexicon : rows=["('Christopher Nolan',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T3.name FROM acted_in AS T1 JOIN person AS T2 ON T1.person_id = T2.id JOIN directed AS T4 ON T1.film_id = T4.film_id JOIN person AS T3 ON T4.person_id = T3.id WHERE T2.name = 'Cotillard' AND T1.film_id IN (SELECT id FROM film WHERE year = 2010)
+19. Which studios produced Dunkirk?
+    lexicon : rows=["('Warner Bros',)"]
+    model   : rows=["('Warner Bros',)"]
+    verdict : same result set
+    model sql: SELECT T3.name FROM film AS T1 INNER JOIN produced AS T2 ON T1.id = T2.film_id INNER JOIN studio AS T3 ON T2.studio_id = T3.id WHERE T1.title = 'Dunkirk'
+20. Which films did Warner produce?
+    lexicon : rows=["('Dunkirk',)", "('Inception',)"]
+    model   : rows=["('Dunkirk',)", "('Inception',)"]
+    verdict : same result set
+    model sql: SELECT T1.title FROM film AS T1 JOIN produced AS T2 ON T1.id = T2.film_id WHERE T2.studio_id IN ( SELECT id FROM studio WHERE name LIKE '%Warner%' )
+21. Which films were produced by Warner in 2010?
+    lexicon : rows=["('Inception',)"]
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T3.title FROM studio AS T1 JOIN produced AS T2 ON T1.id = T2.studio_id JOIN film AS T3 ON T2.film_id = T3.id WHERE T1.name = 'Warner' AND T3.year = 2010
+22. Which directors from Canada directed films in 2016?
+    lexicon : rows=["('Denis Villeneuve',)"]
+    model   : rows=["('Denis Villeneuve',)"]
+    verdict : same result set
+    model sql: SELECT T3.name FROM film AS T1 INNER JOIN directed AS T2 ON T1.id = T2.film_id INNER JOIN person AS T3 ON T2.person_id = T3.id INNER JOIN country AS T4 ON T3.country_id = T4.id WHERE T4.name = 'Canada' AND T1.year = 2016
+23. Which films did Nolan direct or produce?
+    lexicon : rows=ERROR no sql produced
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN directed AS T2 ON T1.id = T2.film_id JOIN person AS T3 ON T2.person_id = T3.id WHERE T3.name = 'Nolan' UNION SELECT T1.title FROM film AS T1 JOIN produced AS T4 ON T1.id = T4.film_id JOIN studio AS T5 ON T4.studio_id = T5.id WHERE T5.name = 'Nolan'
+24. Which films that Nolan directed were released in 2010?
+    lexicon : rows=ERROR no sql produced
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T3.title FROM person AS T1 JOIN directed AS T2 ON T1.id = T2.person_id JOIN film AS T3 ON T2.film_id = T3.id WHERE T1.name = 'Nolan' AND T3.year = 2010
+25. Which films did Kubrick direct?
+    lexicon : rows=ERROR no sql produced
+    model   : rows=[]
+    verdict : differs
+    model sql: SELECT T1.title FROM film AS T1 JOIN directed AS T2 ON T1.id = T2.film_id JOIN person AS T3 ON T2.person_id = T3.id WHERE T3.name = 'Kubrick'
