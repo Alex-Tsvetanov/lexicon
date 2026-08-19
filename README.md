@@ -162,7 +162,23 @@ grep -rn 'TODO' docs/chapters docs/Main.tex docs/references.bib
 - [x] SPARQL generator
 - [x] Sentence synthesis
 - [x] Frozen question set and measurements
-- [ ] Baseline comparison against a large language model: not run
+- [x] Baseline comparison against a language model: **run**, and repeatable.
+      `qwen2.5-coder:7b` (digest `dae161e27b0e`) through Ollama at temperature 0, seed 1.
+      A local model is used precisely because the comparison needs a fixed model, version
+      and settings: a hosted endpoint changes underneath you, a digest does not. Both
+      conditions were run twice and every verdict matched.
+      Compared by **execution equivalence**, not string equality: both queries run against
+      the bundled database and the result sets are compared.
+      Schema only: **5 of 25**. Schema plus the label values: **16 of 25**. The pipeline is
+      handed a lexicon, so withholding labels from the model is not like for like; supplying
+      them triples agreement, which puts the dominant failure in entity linking rather than
+      query construction.
+      Two of the remaining differences are a criterion artefact (`1`/`0` against `'Yes'`/`'No'`)
+      and **three are questions this pipeline cannot answer at all**, where the model can.
+      Reproduce: `python tools/llm_baseline.py --model qwen2.5-coder:7b [--with-labels]`.
+      Raw output in `docs/measurements/llm_baseline_*.txt`.
+      Scope: one small quantised local model, 25 questions, one hand written catalogue. It
+      says nothing about frontier models.
 - [ ] Report chapters filled in, no `\TODO` markers left
 
 Known limits, stated plainly: the knowledge model has one `Person` type, so an actor and a
