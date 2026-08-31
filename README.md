@@ -179,7 +179,7 @@ grep -rn 'TODO' docs/chapters docs/Main.tex docs/references.bib
       Raw output in `docs/measurements/llm_baseline_*.txt`.
       Scope: one small quantised local model, 25 questions, one hand written catalogue. It
       says nothing about frontier models.
-- [ ] Report chapters filled in, no `\TODO` markers left
+- [x] Report chapters filled in; remaining `\TODO` is the faculty number on the title page, which is Alex's to fill
 
 Known limits, stated plainly: the knowledge model has one `Person` type, so an actor and a
 director are the same kind of thing; the grammar has no coordination and no relative clauses;
